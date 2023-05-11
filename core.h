@@ -94,7 +94,7 @@ namespace beepbop {
 		}
 
 		//a function to add a scaled vector to a given vector
-		void addScaledVector(const Vector3D& vector, const real scalar)
+		void addScaledVector(const Vector3D vector, const real scalar)
 		{
 			x += scalar * vector.x;
 			y += scalar * vector.y;
@@ -145,6 +145,11 @@ namespace beepbop {
 		void print()
 		{
 			std::cout << x << " " << y << " " << z << "\n";
+		}
+
+		void clear()
+		{
+			x = y = z = 0;
 		}
 
 	private:

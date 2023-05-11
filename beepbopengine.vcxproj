@@ -131,7 +131,6 @@
     <ClInclude Include="particle.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="particle.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

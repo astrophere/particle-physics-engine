@@ -1,23 +1,29 @@
 #pragma once
 
-
-#include "C:\Users\melan\source\repos\beepbopengine\core.h"
+#include "core.h"
 #include <assert.h>
+#include <stdlib.h>
+
+
+using namespace beepbop;
 
 typedef float real;
 
 class Particle
 {
 protected:
-	beepbop::Vector3D position;
+	Vector3D position;
 
-	beepbop::Vector3D velocity;
+	Vector3D velocity;
 
-	beepbop::Vector3D acceleration;
+	Vector3D acceleration;
 
-	real damping = 0.999;
+	real damping = 0.999999;
 
 	real inverseMass;
+
+	Vector3D forceAccum; //sum of the forces acting of the particle
+
 
 public:
 	Particle(const real x, const real y, const real z) : position(x, y, z) {}
@@ -31,22 +37,23 @@ public:
 		if (inverseMass <= 0.0f) return;
 
 		assert(duration > 0.0);
-
-		//update linear position
-		position.addScaledVector(velocity, duration);
-
+		
 		//work out acceleration from the force
-		//will be updated later on
-		beepbop::Vector3D resultingAcc = acceleration;
+		Vector3D resultingAcc = acceleration;
+		resultingAcc.addScaledVector(forceAccum, inverseMass);
+
 
 		//update linear velocity from acceleration
 		velocity.addScaledVector(resultingAcc, duration);
 
-		//impose drag
+		//impose drag due to computational precision
 		velocity *= pow(damping, duration);
 
+		//update position
+		position.addScaledVector(velocity, duration);
+
 		//Clear the forces
-		//clearAccumulator();
+		clearAccumulator();
 	}
 
 
@@ -106,11 +113,30 @@ public:
 		acceleration.z = az;
 	}
 
-	beepbop::Vector3D getPosition()
+	Vector3D getPosition()
 	{
 		return position;
 	}
 
+	Vector3D getVelocity()
+	{
+		return velocity;
+	}
+
+	Vector3D getAcceleration()
+	{
+		return acceleration;
+	}
+
+	void clearAccumulator()
+	{
+		forceAccum = Vector3D();
+	}
+
+	void addForce(const Vector3D &force)
+	{
+		forceAccum += force;
+	}
 };
 
 
