@@ -11,33 +11,43 @@ namespace MPE {
 	class Vector3D
 	{
 	private:
-		MPE_FLOAT x, y, z;
+		MPE_FLOAT _x, _y, _z;
+		MPE_FLOAT _pad; //padding for storing 4 values in the memory cause it be better
 
 	public:
-		//the default constructor creates a zero vector
-		Vector3D() : x(0), y(0), z(0)
+		// Default constructor
+		Vector3D() : _x(0), _y(0), _z(0)
 		{}
 
-		//the explicit constructor creates a vecotr with 3 given values as coordinates
+		// Explicit constructor
 		Vector3D(const MPE_FLOAT x, const MPE_FLOAT y, const MPE_FLOAT z)
-			: x(x), y(y), z(z) {}
+			: _x(x), _y(y), _z(z) {}
 
-		//flips all the components of the vector
+		// Getters
+		MPE_FLOAT getX() const { return _x; }
+		MPE_FLOAT getY() const { return _y; }
+		MPE_FLOAT getZ() const { return _z; }
+	
+		// Setters
+		void setX(MPE_FLOAT val) { _x = val; }
+		void setY(MPE_FLOAT val) { _y = val; }
+		void setZ(MPE_FLOAT val) { _z = val; }
+
 		void invert()
 		{
-			x = -x;
-			y = -y;
-			z = -z;
+			_x = -_x;
+			_y = -_y;
+			_z = -_z;
 		}
 
 		MPE_FLOAT magnitude() const
 		{
-			return sqrt(x * x + y * y + z * z);
+			return sqrt(_x * _x + _y * _y + _z * _z);
 		}
 
 		MPE_FLOAT squareMagnitude() const
 		{
-			return x * x + y * y + z * z;
+			return _x * _x + _y * _y + _z * _z;
 		}
 
 		void normalise()
@@ -45,115 +55,111 @@ namespace MPE {
 			MPE_FLOAT len = magnitude();
 			if (len > 0)
 			{
-				x /= len;
-				y /= len;
-				z /= len;
+				_x /= len;
+				_y /= len;
+				_z /= len;
 			}
 		}
 
-		//overloading the * operator to multipy 3d vectors by scalars
-		void operator*=(const MPE_FLOAT value)
+		// Multiply scalar * vector & vector * scalar
+		// a *= scalar (a = a * scalar)
+		void operator*=(const MPE_FLOAT scalar)
 		{
-			x *= value;
-			y *= value;
-			z *= value;
+			_x *= scalar;
+			_y *= scalar;
+			_z *= scalar;
+		}
+		// c = a * scalar
+		Vector3D operator*(const MPE_FLOAT scalar)
+		{
+			return Vector3D(_x * scalar, _y * scalar, _z * scalar);
 		}
 
-		//returning the copy of a vector multipied by a scalar
-		Vector3D operator*(const MPE_FLOAT value) const
-		{
-			return Vector3D(x * value, y * value, z * value);
-		}
-
-		//overloading the + operator to add vectors
+		// Sum Vector + Vector
+		// a += b (a = a + b)
 		void operator+=(const Vector3D& v)
 		{
-			x += v.x;
-			y += v.y;
-			z += v.z;
+			_x += v.getX();
+			_y += v.getY();
+			_z += v.getZ();
 		}
-
-		//returning the vector that is the sum of two vectors
+		// c = a + b
 		Vector3D operator+(const Vector3D& v)
 		{
-			return Vector3D(x + v.x, y + v.y, z + v.z);
+			return Vector3D(_x + v.getX(), _y + v.getY(), _z + v.getZ());
 		}
 
-		//overloading the subtraction operator, same as addition
+		// Subtract Vector - Vector
+		// a -= b (a = a - b)
 		void operator-=(const Vector3D& v)
 		{
-			x -= v.x;
-			y -= v.y;
-			z -= v.z;
+			_x -= v.getX();
+			_y -= v.getY();
+			_z -= v.getZ();
 		}
-
+		// c = a - b
 		Vector3D operator-(const Vector3D& v)
 		{
-			return Vector3D(x - v.x, y - v.y, z - v.z);
+			return Vector3D(_x - v.getX(), _y - v.getY(), _z - v.getZ());
 		}
 
-		//a function to add a scaled vector to a given vector
-		void addScaledVector(const Vector3D vector, const MPE_FLOAT scalar)
+		// Add scaled vector
+		void addScaledVector(const Vector3D v, const MPE_FLOAT scalar)
 		{
-			x += scalar * vector.x;
-			y += scalar * vector.y;
-			z += scalar * vector.z;
+			_x += scalar * v.getX();
+			_y += scalar * v.getY();
+			_z += scalar * v.getZ();
 		}
 
-		//a component product - multiplying each component by each other
-		void componentProductUpdate(const Vector3D& vector)
+		// Component-wise multiplication
+		void componentProductUpdate(const Vector3D& v)
 		{
-			x *= vector.x;
-			y *= vector.y;
-			z *= vector.z;
+			_x *= v.getX();
+			_y *= v.getY();
+			_z *= v.getZ();
 		}
-
-		Vector3D componentProduct(const Vector3D& vector)
+		Vector3D componentProduct(const Vector3D& v)
 		{
-			return Vector3D(x * vector.x, y * vector.y, z * vector.z);
+			return Vector3D(_x * v.getX(), _y * v.getY(), _z * v.getZ());
 		}
 
-		// defining the scalar product
+		// Scalar product
 		MPE_FLOAT scalarProduct(const Vector3D& v)
 		{
-			return x * v.x + y * v.y + z * v.z;
+			return _x * v.getX() + _y * v.getY() + _z * v.getZ();
 		}
-
-		//overloading multiplication of two Vector3D so it returns a scalar product
+		// Vector * Vector (scalar product)
 		MPE_FLOAT operator*(const Vector3D& v) const
 		{
-			return x * v.x + y * v.y + z * v.z;
+			return _x * v.getX() + _y * v.getY() + _z * v.getZ();
 		}
 
-		//defining the vector product
+		// Vector product
 		Vector3D vectorProduct(const Vector3D& v)
 		{
-			return Vector3D(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+			return Vector3D(_y * v.getZ() - _z * v.getY(), _z * v.getX() - _x * v.getZ(), _x * v.getY() - _y * v.getX());
 		}
-
+		// v %= w (v % w)
 		void operator%=(const Vector3D& v)
 		{
 			*this = vectorProduct(v);
 		}
-
+		// Vector % Vector (vector product)
 		Vector3D operator%(const Vector3D& v)
 		{
-			return Vector3D(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+			return Vector3D(_y * v.getZ() - _z * v.getY(), _z * v.getX() - _x * v.getZ(), _x * v.getY() - _y * v.getX());
 		}
 
+		// Print vector
 		void print()
 		{
-			std::cout << x << " " << y << " " << z << "\n";
+			std::cout << _x << " " << _y << " " << _z << "\n";
 		}
 
 		void clear()
 		{
-			x = y = z = 0;
+			_x = _y = _z = 0;
 		}
-
-	private:
-		MPE_FLOAT pad; //padding for storing 4 values in the memory cause it be better
-
 	};
 
 }

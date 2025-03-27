@@ -18,11 +18,8 @@ int saveInExcel(vector<Vector3D> vecList, vector<Vector3D> vecList_v, string nam
 
 
 int main() {
-	typedef float real;
-
-
 	//simple projectile motion
-	real timeStep = 0.0083;
+	MPE_FLOAT timeStep = 0.0083;
 
 	//creating a particle, adding mass
 	Particle Carl;
@@ -36,7 +33,7 @@ int main() {
 	vector<Vector3D> mylist_position1;
 	vector<Vector3D> mylist_velocity1;
 
-	real height = Carl.getPosition().y; //height for finishing condition
+	MPE_FLOAT height = Carl.getPosition().getY(); //height for finishing condition
 
 	mylist_position1.push_back(Carl.getPosition());
 	mylist_velocity1.push_back(Carl.getVelocity());
@@ -49,7 +46,7 @@ int main() {
 		mylist_position1.push_back(Carl.getPosition());
 		mylist_velocity1.push_back(Carl.getVelocity());
 
-		height = Carl.getPosition().y;
+		height = Carl.getPosition().getY();
 	}
 
 	saveInExcel(mylist_position1, mylist_velocity1, "simple_projectile");
@@ -67,7 +64,7 @@ int main() {
 	vector<Vector3D> mylist_position2;
 	vector<Vector3D> mylist_velocity2;
 
-	height = Carl.getPosition().y;
+	height = Carl.getPosition().getY();
 
 	mylist_position2.push_back(Carl.getPosition());
 	mylist_velocity2.push_back(Carl.getVelocity());
@@ -92,7 +89,7 @@ int main() {
 		mylist_position2.push_back(Carl.getPosition());
 		mylist_velocity2.push_back(Carl.getVelocity());
 
-		height = Carl.getPosition().y;
+		height = Carl.getPosition().getY();
 	}
 
 	saveInExcel(mylist_position2, mylist_velocity2, "drag");
@@ -115,10 +112,10 @@ int main() {
 	Vector3D EMforce;
 
 	//define a time step
-	real dt = 0.017;
+	MPE_FLOAT dt = 0.017;
 
 	//define a charge
-	real q = 1;//1.6 * pow(10,-19);
+	MPE_FLOAT q = 1;//1.6 * pow(10,-19);
 
 	//list for storing values
 	vector<Vector3D> mylist_position3;
@@ -179,7 +176,7 @@ int saveInExcel(vector<Vector3D> vecList, vector<Vector3D> vecList_v, string nam
 	// Write the 3D vector's coordinates to the CSV file
 	for (int i = 0; i < vecList.size()-1; i++)
 	{
-		file << vecList[i].x << "," << vecList[i].y << "," << vecList[i].z << ", ," << vecList_v[i].x << "," << vecList_v[i].y << "," << vecList_v[i].z << endl;
+		file << vecList[i].getX() << "," << vecList[i].getY() << "," << vecList[i].getZ() << ", ," << vecList_v[i].getX() << "," << vecList_v[i].getY() << "," << vecList_v[i].getZ() << endl;
 	}
 
 	// Close the CSV file

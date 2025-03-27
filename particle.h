@@ -1,47 +1,44 @@
 #pragma once
 
 #include "vector3d.h"
+
 #include <assert.h>
 #include <stdlib.h>
 
 
-using namespace MPE;
-
-typedef float real;
 
 class Particle
 {
-protected:
-	Vector3D position;
+private:
+	MPE::Vector3D position;
 
-	Vector3D velocity;
+	MPE::Vector3D velocity;
 
-	Vector3D acceleration;
+	MPE::Vector3D acceleration;
 
-	real damping = 0.999999;
+	MPE_FLOAT damping = 0.999999;
 
-	real inverseMass;
+	MPE_FLOAT inverseMass;
 
-	Vector3D forceAccum; //sum of the forces acting of the particle
+	MPE::Vector3D forceAccum; //sum of the forces acting of the particle
 
 
 public:
-	Particle(const real x, const real y, const real z) : position(x, y, z) {}
+	Particle(const MPE_FLOAT x, const MPE_FLOAT y, const MPE_FLOAT z) : position(x, y, z) {}
 
 	Particle() : position(0, 0, 0) {}
 
 
 
-	void integrate(real duration)
+	void integrate(MPE_FLOAT duration)
 	{
 		if (inverseMass <= 0.0f) return;
 
 		assert(duration > 0.0);
 		
 		//work out acceleration from the force
-		Vector3D resultingAcc = acceleration;
+		MPE::Vector3D resultingAcc = acceleration;
 		resultingAcc.addScaledVector(forceAccum, inverseMass);
-
 
 		//update linear velocity from acceleration
 		velocity.addScaledVector(resultingAcc, duration);
@@ -58,13 +55,13 @@ public:
 
 
 
-	void setMass(const real mass)
+	void setMass(const MPE_FLOAT mass)
 	{
 		if (mass == 0) return;
 		inverseMass = 1 / mass;
 	}
 	
-	void setInverseMass(const real invMass)
+	void setInverseMass(const MPE_FLOAT invMass)
 	{
 		inverseMass = invMass;
 	}
@@ -92,48 +89,48 @@ public:
 			std::cout << 1 / inverseMass << "\n";
 	}
 
-	void setInitialPosition(const real xx, const real yy, const real zz)
+	void setInitialPosition(const MPE_FLOAT xx, const MPE_FLOAT yy, const MPE_FLOAT zz)
 	{
-		position.x = xx;
-		position.y = yy;
-		position.z = zz;
+		position.setX(xx);
+		position.setY(yy);
+		position.setZ(zz);
 	}
 
-	void setInitialVelocity(const real vx, const real vy, const real vz)
+	void setInitialVelocity(const MPE_FLOAT vx, const MPE_FLOAT vy, const MPE_FLOAT vz)
 	{
-		velocity.x = vx;
-		velocity.y = vy;
-		velocity.z = vz;
+		velocity.setX(vx);
+		velocity.setY(vy);
+		velocity.setZ(vz);
 	}
 
-	void setAcceleration(const real ax, const real ay, const real az)
+	void setAcceleration(const MPE_FLOAT ax, const MPE_FLOAT ay, const MPE_FLOAT az)
 	{
-		acceleration.x = ax;
-		acceleration.y = ay;
-		acceleration.z = az;
+		acceleration.setX(ax);
+		acceleration.setY(ay);
+		acceleration.setZ(az);
 	}
 
-	Vector3D getPosition()
+	MPE::Vector3D getPosition()
 	{
 		return position;
 	}
 
-	Vector3D getVelocity()
+	MPE::Vector3D getVelocity()
 	{
 		return velocity;
 	}
 
-	Vector3D getAcceleration()
+	MPE::Vector3D getAcceleration()
 	{
 		return acceleration;
 	}
 
 	void clearAccumulator()
 	{
-		forceAccum = Vector3D();
+		forceAccum = MPE::Vector3D();
 	}
 
-	void addForce(const Vector3D &force)
+	void addForce(const MPE::Vector3D &force)
 	{
 		forceAccum += force;
 	}
