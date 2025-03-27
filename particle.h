@@ -1,11 +1,11 @@
 #pragma once
 
-#include "core.h"
+#include "vector3d.h"
 #include <assert.h>
 #include <stdlib.h>
 
 
-using namespace beepbop;
+using namespace MPE;
 
 typedef float real;
 

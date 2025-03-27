@@ -1,10 +1,9 @@
-#include "core.h"
 #include "particle.h"
 #include <vector>
 #include <fstream>
 #include <string>
 
-using namespace beepbop;
+using namespace MPE;
 using namespace std;
 
 const double pi = 3.14159265358979323846;

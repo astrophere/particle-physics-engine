@@ -1,26 +1,25 @@
 #pragma once
 
+#include "types.h"
+
 #include <iostream>
 #include <math.h>
 
 
 
-namespace beepbop {
+namespace MPE {
 	class Vector3D
 	{
+	private:
+		MPE_FLOAT x, y, z;
+
 	public:
-		typedef float real;
-
-		real x; //the x, y, z coordinates of the vector
-		real y;
-		real z;
-
 		//the default constructor creates a zero vector
 		Vector3D() : x(0), y(0), z(0)
 		{}
 
 		//the explicit constructor creates a vecotr with 3 given values as coordinates
-		Vector3D(const real x, const real y, const real z)
+		Vector3D(const MPE_FLOAT x, const MPE_FLOAT y, const MPE_FLOAT z)
 			: x(x), y(y), z(z) {}
 
 		//flips all the components of the vector
@@ -31,19 +30,19 @@ namespace beepbop {
 			z = -z;
 		}
 
-		real magnitude() const
+		MPE_FLOAT magnitude() const
 		{
 			return sqrt(x * x + y * y + z * z);
 		}
 
-		real squareMagnitude() const
+		MPE_FLOAT squareMagnitude() const
 		{
 			return x * x + y * y + z * z;
 		}
 
 		void normalise()
 		{
-			real len = magnitude();
+			MPE_FLOAT len = magnitude();
 			if (len > 0)
 			{
 				x /= len;
@@ -53,7 +52,7 @@ namespace beepbop {
 		}
 
 		//overloading the * operator to multipy 3d vectors by scalars
-		void operator*=(const real value)
+		void operator*=(const MPE_FLOAT value)
 		{
 			x *= value;
 			y *= value;
@@ -61,7 +60,7 @@ namespace beepbop {
 		}
 
 		//returning the copy of a vector multipied by a scalar
-		Vector3D operator*(const real value) const
+		Vector3D operator*(const MPE_FLOAT value) const
 		{
 			return Vector3D(x * value, y * value, z * value);
 		}
@@ -94,7 +93,7 @@ namespace beepbop {
 		}
 
 		//a function to add a scaled vector to a given vector
-		void addScaledVector(const Vector3D vector, const real scalar)
+		void addScaledVector(const Vector3D vector, const MPE_FLOAT scalar)
 		{
 			x += scalar * vector.x;
 			y += scalar * vector.y;
@@ -115,13 +114,13 @@ namespace beepbop {
 		}
 
 		// defining the scalar product
-		real scalarProduct(const Vector3D& v)
+		MPE_FLOAT scalarProduct(const Vector3D& v)
 		{
 			return x * v.x + y * v.y + z * v.z;
 		}
 
 		//overloading multiplication of two Vector3D so it returns a scalar product
-		real operator*(const Vector3D& v) const
+		MPE_FLOAT operator*(const Vector3D& v) const
 		{
 			return x * v.x + y * v.y + z * v.z;
 		}
@@ -153,7 +152,7 @@ namespace beepbop {
 		}
 
 	private:
-		real pad; //padding for storing 4 values in the memory cause it be better
+		MPE_FLOAT pad; //padding for storing 4 values in the memory cause it be better
 
 	};
 
