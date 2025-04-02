@@ -7,12 +7,12 @@
 
 
 
-namespace MPE {
+namespace PPE {
 	class Vector3D
 	{
 	private:
-		MPE_FLOAT _x, _y, _z;
-		MPE_FLOAT _pad; //padding for storing 4 values in the memory cause it be better
+		PPE_FLOAT _x, _y, _z;
+		PPE_FLOAT _pad; //padding for storing 4 values in the memory cause it be better
 
 	public:
 		// Default constructor
@@ -20,18 +20,18 @@ namespace MPE {
 		{}
 
 		// Explicit constructor
-		Vector3D(const MPE_FLOAT x, const MPE_FLOAT y, const MPE_FLOAT z)
+		Vector3D(const PPE_FLOAT x, const PPE_FLOAT y, const PPE_FLOAT z)
 			: _x(x), _y(y), _z(z) {}
 
 		// Getters
-		MPE_FLOAT getX() const { return _x; }
-		MPE_FLOAT getY() const { return _y; }
-		MPE_FLOAT getZ() const { return _z; }
+		PPE_FLOAT getX() const { return _x; }
+		PPE_FLOAT getY() const { return _y; }
+		PPE_FLOAT getZ() const { return _z; }
 	
 		// Setters
-		void setX(MPE_FLOAT val) { _x = val; }
-		void setY(MPE_FLOAT val) { _y = val; }
-		void setZ(MPE_FLOAT val) { _z = val; }
+		void setX(PPE_FLOAT val) { _x = val; }
+		void setY(PPE_FLOAT val) { _y = val; }
+		void setZ(PPE_FLOAT val) { _z = val; }
 
 		void invert()
 		{
@@ -40,19 +40,19 @@ namespace MPE {
 			_z = -_z;
 		}
 
-		MPE_FLOAT magnitude() const
+		PPE_FLOAT magnitude() const
 		{
 			return sqrt(_x * _x + _y * _y + _z * _z);
 		}
 
-		MPE_FLOAT squareMagnitude() const
+		PPE_FLOAT squareMagnitude() const
 		{
 			return _x * _x + _y * _y + _z * _z;
 		}
 
 		void normalise()
 		{
-			MPE_FLOAT len = magnitude();
+			PPE_FLOAT len = magnitude();
 			if (len > 0)
 			{
 				_x /= len;
@@ -63,14 +63,14 @@ namespace MPE {
 
 		// Multiply scalar * vector & vector * scalar
 		// a *= scalar (a = a * scalar)
-		void operator*=(const MPE_FLOAT scalar)
+		void operator*=(const PPE_FLOAT scalar)
 		{
 			_x *= scalar;
 			_y *= scalar;
 			_z *= scalar;
 		}
 		// c = a * scalar
-		Vector3D operator*(const MPE_FLOAT scalar)
+		Vector3D operator*(const PPE_FLOAT scalar)
 		{
 			return Vector3D(_x * scalar, _y * scalar, _z * scalar);
 		}
@@ -104,7 +104,7 @@ namespace MPE {
 		}
 
 		// Add scaled vector
-		void addScaledVector(const Vector3D v, const MPE_FLOAT scalar)
+		void addScaledVector(const Vector3D v, const PPE_FLOAT scalar)
 		{
 			_x += scalar * v.getX();
 			_y += scalar * v.getY();
@@ -124,12 +124,12 @@ namespace MPE {
 		}
 
 		// Scalar product
-		MPE_FLOAT scalarProduct(const Vector3D& v)
+		PPE_FLOAT scalarProduct(const Vector3D& v)
 		{
 			return _x * v.getX() + _y * v.getY() + _z * v.getZ();
 		}
 		// Vector * Vector (scalar product)
-		MPE_FLOAT operator*(const Vector3D& v) const
+		PPE_FLOAT operator*(const Vector3D& v) const
 		{
 			return _x * v.getX() + _y * v.getY() + _z * v.getZ();
 		}

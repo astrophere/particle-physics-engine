@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 
-using namespace MPE;
+using namespace PPE;
 using namespace std;
 
 const double pi = 3.14159265358979323846;
@@ -19,7 +19,7 @@ int saveInExcel(vector<Vector3D> vecList, vector<Vector3D> vecList_v, string nam
 
 int main() {
 	//simple projectile motion
-	MPE_FLOAT timeStep = 0.0083;
+	PPE_FLOAT timeStep = 0.0083;
 
 	//creating a particle, adding mass
 	Particle Carl;
@@ -33,7 +33,7 @@ int main() {
 	vector<Vector3D> mylist_position1;
 	vector<Vector3D> mylist_velocity1;
 
-	MPE_FLOAT height = Carl.getPosition().getY(); //height for finishing condition
+	PPE_FLOAT height = Carl.getPosition().getY(); //height for finishing condition
 
 	mylist_position1.push_back(Carl.getPosition());
 	mylist_velocity1.push_back(Carl.getVelocity());
@@ -112,10 +112,10 @@ int main() {
 	Vector3D EMforce;
 
 	//define a time step
-	MPE_FLOAT dt = 0.017;
+	PPE_FLOAT dt = 0.017;
 
 	//define a charge
-	MPE_FLOAT q = 1;//1.6 * pow(10,-19);
+	PPE_FLOAT q = 1;//1.6 * pow(10,-19);
 
 	//list for storing values
 	vector<Vector3D> mylist_position3;
