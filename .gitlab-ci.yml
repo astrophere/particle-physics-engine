@@ -1,0 +1,21 @@
+stages:
+  - build
+  - test
+  - cleanup
+
+build-job:
+  stage: build
+  script:
+    - echo "Hello, World!"
+
+unit-test-job:
+  stage: test
+  script:
+    - echo "Running unit tests... This will take about 60 seconds."
+    - sleep 5
+    - echo "Code coverage is 90%"
+
+cleanup-job:
+  stage: cleanup
+  script:
+    - echo "Cleaned up
