@@ -5,11 +5,13 @@ stages:
 
 build-job:
   stage: build
+  tags: [ PPE ]
   script:
     - echo "Hello, World!"
 
 unit-test-job:
   stage: test
+  tags: [ PPE ]
   script:
     - echo "Running unit tests... This will take about 60 seconds."
     - sleep 5
@@ -17,5 +19,6 @@ unit-test-job:
 
 cleanup-job:
   stage: cleanup
+  tags: [ PPE ]
   script:
     - echo "Cleaned up
