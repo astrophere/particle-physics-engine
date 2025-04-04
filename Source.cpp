@@ -19,134 +19,13 @@ int saveInExcel(vector<Vector3D> vecList, vector<Vector3D> vecList_v, string nam
 
 int main() {
 	//simple projectile motion
-	PPE_FLOAT timeStep = 0.0083;
-
-	//creating a particle, adding mass
-	Particle Carl;
-	Carl.setInverseMass(0.5);
-
-	//defining acceleration and initial position (0) and velocity
-	Carl.setAcceleration(0, -9.81, 0);
-	Carl.setInitialVelocity(10, 10, 0);
-
-	//initiating lists with positions and velocitis, to be exported later
-	vector<Vector3D> mylist_position1;
-	vector<Vector3D> mylist_velocity1;
-
-	PPE_FLOAT height = Carl.getPosition().getY(); //height for finishing condition
-
-	mylist_position1.push_back(Carl.getPosition());
-	mylist_velocity1.push_back(Carl.getVelocity());
-
-
-	for (int i = 0; height >= 0; i++) //loop that runs the projectile
-	{
-		Carl.integrate(timeStep);
-
-		mylist_position1.push_back(Carl.getPosition());
-		mylist_velocity1.push_back(Carl.getVelocity());
-
-		height = Carl.getPosition().getY();
-	}
-
-	saveInExcel(mylist_position1, mylist_velocity1, "simple_projectile");
-
-
+	// ...
 
 	//drag force motion
-	/*
-	Particle Carl;
-	Carl.setInverseMass(0.5); */
-
-	Carl.setAcceleration(0, -9.81, 0);
-	Carl.setInitialVelocity(10, 10, 0);
-
-	vector<Vector3D> mylist_position2;
-	vector<Vector3D> mylist_velocity2;
-
-	height = Carl.getPosition().getY();
-
-	mylist_position2.push_back(Carl.getPosition());
-	mylist_velocity2.push_back(Carl.getVelocity());
-
-	Vector3D drag; //defining drag
-	Vector3D Carl_vel_norm_inv = Carl.getVelocity();
-
-	float constant = 0.5 * 1 * 0.47 * pi * 1 * 1; //air resistance constant
-
-	for (int i = 0; height >= 0; i++)
-	{
-		Carl_vel_norm_inv = Carl.getVelocity(); //calculating the direction of drag force
-		Carl_vel_norm_inv.normalise();
-		Carl_vel_norm_inv.invert();
-
-		drag = Vector3D();
-		drag.addScaledVector(Carl_vel_norm_inv, constant * Carl.getVelocity().squareMagnitude()); //defining drag force
-		Carl.addForce(drag); //adding drag to the integrator
-
-		Carl.integrate(0.017);
-
-		mylist_position2.push_back(Carl.getPosition());
-		mylist_velocity2.push_back(Carl.getVelocity());
-
-		height = Carl.getPosition().getY();
-	}
-
-	saveInExcel(mylist_position2, mylist_velocity2, "drag");
-
-
+	// ...
 
 	//EM field motion
-	
-	Particle Sarah(0, 0, 0);
-	Sarah.setMass(1);
-	Sarah.setInitialVelocity(0.1, 0.1, 0);
-
-	//define the electric field vector in x direction
-	Vector3D E(0, 0, 0); //0 for no electric field
-	
-	//define magnetic field in y direction
-	Vector3D B(0, 1, 0);
-
-	//define an electromagnetic force
-	Vector3D EMforce;
-
-	//define a time step
-	PPE_FLOAT dt = 0.017;
-
-	//define a charge
-	PPE_FLOAT q = 1;//1.6 * pow(10,-19);
-
-	//list for storing values
-	vector<Vector3D> mylist_position3;
-	vector<Vector3D> mylist_velocity3;
-	mylist_position3.push_back(Sarah.getPosition());
-	mylist_velocity3.push_back(Sarah.getVelocity());
-
-	//make a loop
-	for (double t = 0; t <= 15; t = t + dt)
-	{
-		//define a force acting on the particle
-		Vector3D SarahV = Sarah.getVelocity();
-		Vector3D VcrossB = SarahV % B;
-		EMforce.addScaledVector(E,q);
-		EMforce.addScaledVector(VcrossB,q);
-
-		//add EM force to Sarah
-		Sarah.addForce(EMforce);
-
-		//call the integrator
-		Sarah.integrate(dt);
-
-		//save values etc
-		mylist_position3.push_back(Sarah.getPosition());
-		mylist_velocity3.push_back(Sarah.getVelocity());
-
-		//clear the EM force
-		EMforce = Vector3D();
-	}
-
-	saveInExcel(mylist_position3, mylist_velocity3, "magnetic");
+	// ...
 }
 
 

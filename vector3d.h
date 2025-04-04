@@ -5,7 +5,8 @@
 #include <iostream>
 #include <math.h>
 
-
+// TODO: create vector3D.cpp
+// TODO: define vector3D = vector3D
 
 namespace PPE {
 	class Vector3D
@@ -15,11 +16,8 @@ namespace PPE {
 		PPE_FLOAT _pad; //padding for storing 4 values in the memory cause it be better
 
 	public:
-		// Default constructor
-		Vector3D() : _x(0), _y(0), _z(0)
-		{}
-
-		// Explicit constructor
+		// Constructors
+		Vector3D() : _x(0), _y(0), _z(0) {}
 		Vector3D(const PPE_FLOAT x, const PPE_FLOAT y, const PPE_FLOAT z)
 			: _x(x), _y(y), _z(z) {}
 
@@ -27,11 +25,18 @@ namespace PPE {
 		PPE_FLOAT getX() const { return _x; }
 		PPE_FLOAT getY() const { return _y; }
 		PPE_FLOAT getZ() const { return _z; }
+		Vector3D getXYZ() const { return Vector3D(_x, _y, _z); }
 	
 		// Setters
-		void setX(PPE_FLOAT val) { _x = val; }
-		void setY(PPE_FLOAT val) { _y = val; }
-		void setZ(PPE_FLOAT val) { _z = val; }
+		void setX(const PPE_FLOAT val) { _x = val; }
+		void setY(const PPE_FLOAT val) { _y = val; }
+		void setZ(const PPE_FLOAT val) { _z = val; }
+		void setXYZ(const Vector3D& vector)
+		{
+			_x = vector.getX();
+			_y = vector.getY();
+			_z = vector.getZ();
+		}
 
 		void invert()
 		{
@@ -77,6 +82,7 @@ namespace PPE {
 
 		// Sum Vector + Vector
 		// a += b (a = a + b)
+		// TODO: v._x instead of v.getX() ???
 		void operator+=(const Vector3D& v)
 		{
 			_x += v.getX();
