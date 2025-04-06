@@ -18,7 +18,7 @@ unit-test-job:
     - echo "Running unit tests..."
     - echo "$env:CI_PROJECT_DIR/runTests.bat"
     - Start-Process "$env:CI_PROJECT_DIR/runTests.bat" -Wait
-    - Get-Content "$env:CI_PROJECT_DIR/test_output.log"
+    - Get-Content "$env:CI_PROJECT_DIR/test_output.log" | ForEach-Object { Write-Host $_ }
     - echo "Tests finished."
 
 cleanup-job:
