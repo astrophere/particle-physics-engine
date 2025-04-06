@@ -34,3 +34,5 @@
 *.exe
 *.out
 *.app
+test_output.log
+test_results.xml
