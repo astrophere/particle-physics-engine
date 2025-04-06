@@ -5,9 +5,6 @@ stages:
   - test
   - cleanup
 
-variables:
-  CI_PROJECT_DIR: "C:/gitlab-runner/builds/$CI_PIPELINE_ID/$CI_JOB_ID"
-
 build-job:
   stage: build
   tags: [ PPE ]
@@ -19,6 +16,7 @@ unit-test-job:
   tags: [ PPE ]
   script:
     - echo "Running unit tests..."
+    - echo "$env:CI_PROJECT_DIR/runTests.bat"
     - Start-Process "$env:CI_PROJECT_DIR/runTests.bat"
     - Get-Content "$env:CI_PROJECT_DIR/test_output.log"
     - echo "Tests finished."
