@@ -6,14 +6,7 @@ stages:
   - cleanup
 
 variables:
-  GITLAB_ROOT: "C:/gitlab-runner/builds/$CI_PIPELINE_ID/$CI_JOB_ID"
-
-before_script:
-  - echo "Setting up environment..."
-  - New-Item -ItemType Directory -Path "$env:GITLAB_ROOT" -Force
-  - Set-Location "$env:GITLAB_ROOT"
-  - echo "Directory created at:` $env:GITLAB_ROOT"
-  - echo "Current directory:` $(Get-Location)"
+  CI_PROJECT_DIR: "C:/gitlab-runner/builds/$CI_PIPELINE_ID/$CI_JOB_ID"
 
 build-job:
   stage: build
@@ -26,8 +19,8 @@ unit-test-job:
   tags: [ PPE ]
   script:
     - echo "Running unit tests..."
-    - .\runTests.bat
-    - Get-Content "$env:GITLAB_ROOT/test_output.log"
+    - Start-Process "$env:CI_PROJECT_DIR/runTests.bat"
+    - Get-Content "$env:CI_PROJECT_DIR/test_output.log"
     - echo "Tests finished."
 
 cleanup-job:
