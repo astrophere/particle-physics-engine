@@ -4,7 +4,6 @@ stages:
   - build
   - test
   - cleanup
-  - mirror
 
 variables:
   GIT_CLONE_PATH: 'C:/gitlab-runner/builds/PPE/$CI_PIPELINE_ID/$CI_JOB_ID'
@@ -31,16 +30,3 @@ cleanup-job:
   tags: [ PPE ]
   script:
     - echo "Cleaned up
-
-mirror-to-github:
-  stage: mirror
-  tags: [ PPE ]
-  script:
-    - git config --global user.name "${GITHUB_USER_NAME}"
-    - git config --global user.email "${GITHUB_USER_EMAIL}"
-    - git clone --mirror "${CI_REPOSITORY_URL}" repo-mirror
-    - cd repo-mirror
-    - git remote add github "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}@github.com/astrophere/particle-physics-engine.git"
-    - git push --mirror github
-  only:
-    - branches  # run this job on all branches
