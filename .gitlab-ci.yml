@@ -21,9 +21,9 @@ unit-test-job:
   tags: [ PPE ]
   script:
     - echo "Running unit tests..."
-    - echo "$env:CI_PROJECT_DIR/runTests.bat"
-    - Start-Process "$env:CI_PROJECT_DIR/runTests.bat" -NoNewWindow -Wait
-    - Get-Content "$env:CI_PROJECT_DIR/test_output.log" | ForEach-Object { Write-Host $_ }
+    - echo "${env:CI_PROJECT_DIR}/runTests.bat"
+    - Start-Process "${env:CI_PROJECT_DIR}/runTests.bat" -NoNewWindow -Wait
+    - Get-Content "${env:CI_PROJECT_DIR}/test_output.log" | ForEach-Object { Write-Host $_ }
     - echo "Tests finished."
 
 cleanup-job:
@@ -36,11 +36,11 @@ mirror-to-github:
   stage: mirror
   tags: [ PPE ]
   script:
-    - git config --global user.name "$GITHUB_USER_NAME"
-    - git config --global user.email "$GITHUB_USER_EMAIL"
-    - git clone --mirror "$CI_REPOSITORY_URL" repo-mirror
+    - git config --global user.name "${GITHUB_USER_NAME}"
+    - git config --global user.email "${GITHUB_USER_EMAIL}"
+    - git clone --mirror "${CI_REPOSITORY_URL}" repo-mirror
     - cd repo-mirror
-    - git remote add github "https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/<your-username>/<repo>.git"
+    - git remote add github "https://${GITHUB_USER_NAME}:${GITHUB_TOKEN}@github.com/astrophere/particle-physics-engine.git"
     - git push --mirror github
   only:
     - branches  # run this job on all branches
